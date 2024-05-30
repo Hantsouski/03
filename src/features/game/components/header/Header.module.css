@@ -1,0 +1,17 @@
+.container {
+  display: flex;
+  gap: 3rem;
+  padding: 0.8rem;
+  justify-content: center;
+
+  background-color: black;
+  font-size: 1.6rem;
+}
+
+.score {
+  > span {
+    display: inline-block;
+    min-width: 6rem;
+    color: white;
+  }
+}

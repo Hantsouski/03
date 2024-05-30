@@ -1,0 +1,46 @@
+.container {
+  margin-bottom: 9rem;
+  display: flex;
+  gap: 50px;
+  font-size: 4rem;
+  color: white;
+  text-align: center;
+
+  > div {
+    margin: auto;
+  }
+}
+
+.pvp {
+  display: flex;
+  align-items: baseline;
+  position: relative;
+  gap: 50px;
+
+  > div {
+    position: absolute;
+  }
+
+  > div:first-of-type {
+    right: 300%;
+  }
+
+  > div:last-of-type {
+    left: 300%;
+  }
+
+  span {
+    font-size: 2rem;
+    color: var(--accent-color);
+    transform: translateY(85%);
+  }
+}
+
+.playerWin {
+  font-size: 2rem;
+  color: var(--accent-color);
+
+  > span {
+    color: white;
+  }
+}
