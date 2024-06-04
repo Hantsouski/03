@@ -44,27 +44,6 @@ function* decideWinner(): SagaIterator {
     ])
   }
 
-  const tiePosition = betPositions.find(
-    pos => getMatchResult(computerPosition, pos) === MatchResult.Tie,
-  )
-
-  if (tiePosition) {
-    return yield all([
-      put(setMatchResult({ matchResult: MatchResult.Loss })),
-      put(
-        setPlayerPosition({
-          position:
-            betPositions.find(
-              pos => getMatchResult(computerPosition, pos) === MatchResult.Loss,
-            ) ||
-            betPositions.find(
-              pos => getMatchResult(computerPosition, pos) === MatchResult.Tie,
-            )!,
-        }),
-      ),
-    ])
-  }
-
   const winPosition = betPositions.find(
     pos => getMatchResult(computerPosition, pos) === MatchResult.Win,
   )
@@ -76,9 +55,17 @@ function* decideWinner(): SagaIterator {
     ])
   }
 
+  const lossPosition = betPositions.find(
+    pos => getMatchResult(computerPosition, pos) === MatchResult.Loss,
+  )!
+
   yield all([
     put(setMatchResult({ matchResult: MatchResult.Loss })),
-    put(setPlayerPosition({ position: betPositions[0] })),
+    put(
+      setPlayerPosition({
+        position: lossPosition,
+      }),
+    ),
   ])
 }
 
