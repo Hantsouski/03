@@ -44,3 +44,15 @@
     color: white;
   }
 }
+
+.rock {
+  color: var(--rock-color);
+}
+
+.paper {
+  color: var(--paper-color);
+}
+
+.scissors {
+  color: var(--scissors-color);
+}

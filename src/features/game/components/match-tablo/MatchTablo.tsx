@@ -9,7 +9,6 @@ import {
   selectMatchResult,
   selectWin,
 } from "../../gameSlice"
-import { POSITION_COLORS } from "../../utils"
 import styles from "./MatchTablo.module.css"
 
 export const MatchTablo = () => {
@@ -22,14 +21,13 @@ export const MatchTablo = () => {
   const computerPosition = useAppSelector(selectComputerPosition)
   const playerPosition = useAppSelector(selectPlayerPosition)
 
-  const color = matchResult === MatchResult.Win ? POSITION_COLORS[playerPosition!] : ""
-
   const matchResultTitle =
     matchResult === MatchResult.Win ? `${playerPosition} WON` : matchResult
   const playerWin =
     matchResult === MatchResult.Win || matchResult === MatchResult.Tie
       ? `You win`
       : ""
+  const winColor = matchResult === MatchResult.Win ? playerPosition!.toLowerCase() : '';
 
   return (
     <div className={styles.container}>
@@ -41,7 +39,7 @@ export const MatchTablo = () => {
         </div>
       )}
       {isMatchEnded && (
-        <div style={{ color }}>
+        <div className={styles[winColor]}>
           {matchResultTitle}{" "}
           {playerWin && (
             <div className={styles.playerWin}>

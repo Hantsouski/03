@@ -53,6 +53,18 @@
   }
 }
 
+.rock {
+  --color: var(--rock-color);
+}
+
+.paper {
+  --color: var(--paper-color);
+}
+
+.scissors {
+  --color: var(--scissors-color);
+}
+
 .label {
   font-size: 2.8rem;
 }
@@ -63,6 +75,11 @@
 
 .increaseButton {
   right: 12px;
+}
+
+.increaseButtonCentered {
+  right: 50%;
+  transform: translateX(50%);
 }
 
 .betAmount {
@@ -77,4 +94,8 @@
   place-items: center;
   margin-bottom: 1.6rem;
   display: grid;
+}
+
+.betAmountHidden {
+  visibility: hidden;
 }

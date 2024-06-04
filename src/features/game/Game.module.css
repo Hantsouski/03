@@ -1,5 +1,8 @@
 .container {
   --accent-color: #f5d760;
+  --rock-color: #6881FD;
+  --paper-color: #6CC417;
+  --scissors-color: #FF3F00;
 
   height: 100vh;
   display: flex;

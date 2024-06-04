@@ -8,14 +8,12 @@ import {
   selectCanIncreaseBet,
   selectIsBetting,
 } from "../../gameSlice"
-import type { CSSProperties } from "react"
 import type { Position } from "../../game.interfaces"
 
 interface PositionProps {
   position: Position
-  color: string
 }
-export const PositionCard = ({ position, color }: PositionProps) => {
+export const PositionCard = ({ position }: PositionProps) => {
   const canIncreaseBet = useAppSelector(selectCanIncreaseBet(position))
   const canDescreaseBet = useAppSelector(selectCanDescreaseBet(position))
   const isBetting = useAppSelector(selectIsBetting)
@@ -25,10 +23,7 @@ export const PositionCard = ({ position, color }: PositionProps) => {
   const betUnavailable = !canIncreaseBet && !canDescreaseBet
 
   return (
-    <div
-      className={styles.position}
-      style={{ "--color": color } as CSSProperties}
-    >
+    <div className={`${styles.position} ${styles[position.toLowerCase()]}`}>
       <button
         hidden={betUnavailable || amount === 0}
         className={styles.descreaseButton}
@@ -39,25 +34,15 @@ export const PositionCard = ({ position, color }: PositionProps) => {
       </button>
       <button
         hidden={betUnavailable}
-        className={styles.increaseButton}
+        className={`${styles.increaseButton} ${amount === 0 ? styles.increaseButtonCentered : ""}`}
         disabled={!canIncreaseBet}
-        style={{
-          right: amount === 0 ? "50%" : "12px",
-          transform: amount === 0 ? "translateX(50%)" : "",
-        }}
         onClick={() => dispatch(bet({ position, type: "increase" }))}
       >
         <span>+</span>
       </button>
 
       <span
-        style={{
-          visibility:
-            (betUnavailable && isBetting) || amount === 0
-              ? "hidden"
-              : "visible",
-        }}
-        className={styles.betAmount}
+        className={`${styles.betAmount} ${(betUnavailable && isBetting) || amount === 0 ? styles.betAmountHidden : ""}`}
       >
         <span>{amount}</span>
       </span>

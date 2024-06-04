@@ -43,12 +43,6 @@ export const calculateTotalBets = (bets: Bets) => {
   return Object.values(bets).reduce((total, amount) => total + amount, 0)
 }
 
-export const POSITION_COLORS = {
-  [Position.Rock]: "#6881FD",
-  [Position.Paper]: "#6CC417",
-  [Position.Scissors]: "#FF3F00",
-}
-
 const positions = Object.values(Position)
 
 const randomInt = (min: number, max: number) =>
