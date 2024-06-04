@@ -81,7 +81,7 @@ export const gameSlice = createAppSlice({
       switch (state.matchResult) {
         case MatchResult.Win:
           state.win =
-            calculateTotalBets(state.bets) * calculateWinRate(state.bets)
+            state.bets[state.playerPosition!]! * calculateWinRate(state.bets)
 
           break
 
