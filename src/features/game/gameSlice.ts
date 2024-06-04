@@ -3,21 +3,18 @@ import { createSelector, type PayloadAction } from "@reduxjs/toolkit"
 import { createAppSlice } from "../../app/createAppSlice"
 import type { GameState, Position } from "./game.interfaces"
 import { MatchResult } from "./game.interfaces"
-import { calculateTotalBets, calculateWinRate } from "./utils"
+import {
+  calculateTotalBets,
+  calculateWinRate,
+  playMatch,
+  randomPosition,
+} from "./utils"
 
 const BET_INCREMENT = 500
 
 interface BetPayload {
   position: Position
   type: "increase" | "descrease"
-}
-
-interface SetPlayerPayload {
-  position: Position
-}
-
-interface SetGameResultPayload {
-  matchResult: MatchResult
 }
 
 const initialState: GameState = {
@@ -52,21 +49,15 @@ export const gameSlice = createAppSlice({
     },
     play: state => {
       state.status = "playing"
-    },
-    endGame: state => {
-      state.status = "finished"
-    },
-    endMatch: state => {
-      state.status = "match ended"
-    },
-    setComputerPosition: (state, action: PayloadAction<SetPlayerPayload>) => {
-      state.computerPosition = action.payload.position
-    },
-    setPlayerPosition: (state, action: PayloadAction<SetPlayerPayload>) => {
-      state.playerPosition = action.payload.position
-    },
-    setMatchResult: (state, action: PayloadAction<SetGameResultPayload>) => {
-      state.matchResult = action.payload.matchResult
+
+      state.computerPosition = randomPosition()
+      const [matchResult, playerPosition] = playMatch(
+        state.computerPosition,
+        state.bets,
+      )
+
+      state.matchResult = matchResult
+      state.playerPosition = playerPosition
     },
     nextMatch: state => {
       const balance = state.balance + state.win
@@ -77,7 +68,7 @@ export const gameSlice = createAppSlice({
         ...(balance === 0 && { status: "finished" }),
       }
     },
-    setWinAmount: state => {
+    showMatchResult: state => {
       switch (state.matchResult) {
         case MatchResult.Win:
           state.win =
@@ -98,6 +89,8 @@ export const gameSlice = createAppSlice({
         default:
           break
       }
+
+      state.status = "match ended"
     },
   }),
   selectors: {
@@ -135,17 +128,7 @@ export const selectCanDescreaseBet = (position: Position) => {
 export const selectBetForPosition = (position: Position) =>
   createSelector([selectBets], bets => bets[position] || 0)
 
-export const {
-  bet,
-  play,
-  setComputerPosition,
-  setPlayerPosition,
-  setMatchResult,
-  endGame,
-  endMatch,
-  nextMatch,
-  setWinAmount,
-} = gameSlice.actions
+export const { bet, play, nextMatch, showMatchResult } = gameSlice.actions
 
 export const {
   selectBalance,

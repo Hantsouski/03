@@ -48,3 +48,35 @@ export const POSITION_COLORS = {
   [Position.Paper]: "#6CC417",
   [Position.Scissors]: "#FF3F00",
 }
+
+const positions = Object.values(Position)
+
+const randomInt = (min: number, max: number) =>
+  Math.floor(Math.random() * max) + min
+
+export const randomPosition = () => positions[randomInt(0, 3)]
+
+export const playMatch = (
+  computerPosition: Position,
+  bets: Bets,
+): [MatchResult, Position] => {
+  const betPositions = Object.keys(bets) as Position[]
+
+  if (betPositions.length === 1) {
+    return [getMatchResult(computerPosition, betPositions[0]), betPositions[0]]
+  }
+
+  const winPosition = betPositions.find(
+    pos => getMatchResult(computerPosition, pos) === MatchResult.Win,
+  )
+
+  if (winPosition) {
+    return [MatchResult.Win, winPosition]
+  }
+
+  const lossPosition = betPositions.find(
+    pos => getMatchResult(computerPosition, pos) === MatchResult.Loss,
+  )!
+
+  return [MatchResult.Loss, lossPosition]
+}

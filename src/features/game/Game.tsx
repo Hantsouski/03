@@ -7,14 +7,26 @@ import {
   selectCanPlay,
   selectIsBetting,
   selectIsMatchEnded,
+  selectIsPlaying,
+  showMatchResult,
 } from "./gameSlice"
 import { PositionCards, Header, MatchTablo } from "./components"
+import { useEffect } from "react"
 
 export const Game = () => {
   const dispatch = useAppDispatch()
   const canPlay = useAppSelector(selectCanPlay)
   const isMatchEnded = useAppSelector(selectIsMatchEnded)
   const isBetting = useAppSelector(selectIsBetting)
+  const isPlaying = useAppSelector(selectIsPlaying)
+
+  useEffect(() => {
+    if (isPlaying) {
+      setTimeout(() => {
+        dispatch(showMatchResult())
+      }, 1500)
+    }
+  }, [dispatch, isPlaying])
 
   return (
     <div className={styles.container}>
