@@ -1,8 +1,10 @@
 .container {
   --accent-color: #f5d760;
-  --rock-color: #6881FD;
-  --paper-color: #6CC417;
-  --scissors-color: #FF3F00;
+  --rock-color: #6881fd;
+  --paper-color: #6cc417;
+  --scissors-color: #ff3f00;
+
+  --border-radius: 20px;
 
   height: 100vh;
   display: flex;
@@ -12,23 +14,17 @@
   font-weight: bold;
 }
 
-.pick {
-  margin-bottom: 2rem;
-}
-
 .main {
   flex-grow: 1;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-
-  background: linear-gradient(to top, #000000, #434343);
 }
 
 .button {
   text-align: center;
   border: 2px solid var(--accent-color);
-  border-radius: 62px;
+  border-radius: var(--border-radius);
   background-color: #000000;
   color: var(--accent-color);
   font-size: 2.8rem;
@@ -36,9 +32,11 @@
   text-transform: uppercase;
   transition: all 0.2s ease-in-out;
 
-  &:hover:enabled {
+  &:hover:enabled,
+  &:focus-within {
     background-color: var(--accent-color);
     color: black;
+    border-radius: var(--border-radius);
     cursor: pointer;
   }
 
@@ -60,4 +58,10 @@
 
 .title {
   margin-bottom: 3rem;
+}
+
+*:focus-visible {
+  outline: 3px solid white;
+  outline-offset: 0.25rem;
+  border-radius: 0.125rem;
 }

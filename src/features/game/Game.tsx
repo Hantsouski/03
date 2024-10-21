@@ -46,7 +46,7 @@ export const Game = () => {
                 className={styles.button}
                 onClick={() => dispatch(nextMatch())}
               >
-                Clear
+                Next
               </button>
             ) : (
               <button

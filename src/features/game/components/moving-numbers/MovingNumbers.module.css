@@ -1,0 +1,15 @@
+.label {
+  font-size: 2.2rem;
+  color: inherit;
+  font-weight: inherit;
+
+  display: grid;
+  position: relative;
+
+  overflow: hidden;
+
+  > * {
+    grid-row: 1;
+    grid-column: 1;
+  }
+}

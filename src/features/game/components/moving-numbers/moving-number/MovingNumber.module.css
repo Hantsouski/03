@@ -1,0 +1,39 @@
+.number {
+  perspective: 1000px;
+  color: inherit;
+
+  & div {
+    animation-duration: 900ms;
+    animation-fill-mode: forwards;
+    animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  }
+}
+
+.previousNumber {
+  transform-origin: center bottom;
+
+  & > div {
+    animation-name: previousMovement;
+  }
+}
+
+.currentNumber {
+  transform-origin: center top;
+
+  & > div {
+    animation-name: currentMovement;
+    transform: translateY(calc(var(--direction) * 110%));
+  }
+}
+
+@keyframes previousMovement {
+  to {
+    transform: translateY(calc(var(--direction) * -110%));
+  }
+}
+
+@keyframes currentMovement {
+  to {
+    transform: translateY(0);
+  }
+}

@@ -4,49 +4,34 @@ import { useAppDispatch, useAppSelector } from "../../../../app/hooks"
 import {
   bet,
   selectBetForPosition,
-  selectCanDescreaseBet,
   selectCanIncreaseBet,
-  selectIsBetting,
 } from "../../gameSlice"
 import type { Position } from "../../game.interfaces"
+import { MovingNumbers, MovingNumber } from "../moving-numbers"
+import { usePrevious } from "../../hooks"
 
 interface PositionProps {
   position: Position
 }
 export const PositionCard = ({ position }: PositionProps) => {
   const canIncreaseBet = useAppSelector(selectCanIncreaseBet(position))
-  const canDescreaseBet = useAppSelector(selectCanDescreaseBet(position))
-  const isBetting = useAppSelector(selectIsBetting)
   const amount = useAppSelector(selectBetForPosition(position))
   const dispatch = useAppDispatch()
 
-  const betUnavailable = !canIncreaseBet && !canDescreaseBet
+  const prevAmount = usePrevious(amount)
 
   return (
-    <div className={`${styles.position} ${styles[position.toLowerCase()]}`}>
-      <button
-        hidden={betUnavailable || amount === 0}
-        className={styles.descreaseButton}
-        disabled={!canDescreaseBet}
-        onClick={() => dispatch(bet({ position, type: "descrease" }))}
-      >
-        <span>-</span>
-      </button>
-      <button
-        hidden={betUnavailable}
-        className={`${styles.increaseButton} ${amount === 0 ? styles.increaseButtonCentered : ""}`}
-        disabled={!canIncreaseBet}
-        onClick={() => dispatch(bet({ position, type: "increase" }))}
-      >
-        <span>+</span>
-      </button>
-
-      <span
-        className={`${styles.betAmount} ${(betUnavailable && isBetting) || amount === 0 ? styles.betAmountHidden : ""}`}
-      >
-        <span>{amount}</span>
-      </span>
+    <button
+      onClick={() =>
+        canIncreaseBet && dispatch(bet({ position, type: "increase" }))
+      }
+      className={`${styles.position} ${styles[position.toLowerCase()]}`}
+    >
       <div className={styles.label}>{position}</div>
-    </div>
+      <MovingNumbers key={`${prevAmount}+${amount}`}>
+        <MovingNumber type="previous">{prevAmount}</MovingNumber>
+        <MovingNumber type="current">{amount}</MovingNumber>
+      </MovingNumbers>
+    </button>
   )
 }

@@ -27,7 +27,8 @@ export const MatchTablo = () => {
     matchResult === MatchResult.Win || matchResult === MatchResult.Tie
       ? `You win`
       : ""
-  const winColor = matchResult === MatchResult.Win ? playerPosition!.toLowerCase() : '';
+  const winColor =
+    matchResult === MatchResult.Win ? playerPosition!.toLowerCase() : ""
 
   return (
     <div className={styles.container}>
@@ -40,7 +41,7 @@ export const MatchTablo = () => {
       )}
       {isMatchEnded && (
         <div className={styles[winColor]}>
-          {matchResultTitle}{" "}
+          {`${matchResultTitle} `}
           {playerWin && (
             <div className={styles.playerWin}>
               You win <span>{win}</span>
